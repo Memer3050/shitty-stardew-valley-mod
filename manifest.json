@@ -1,10 +1,10 @@
 {
-	"Name": "Memers cheat sheet",
+	"Name": "SpeedhackStardewValley",
 	"Author": "Memer",
-	"Version": "0.2.1-beta",
-	"Description": "Cheat sheet",
+	"Version": "0.1.1a",
+	"Description": "Stardew Valley Speed Hacks and More.",
 	"UniqueID": "Memer.speedhackstardew",
-	"EntryDll": "speedhackstardew.dll",
+	"EntryDll": "SpeedHack.dll",
 	"MinimumApiVersion": "3.0.0",
-	"UpdateKeys": ["GitHub:Memer3050/shitty-stardew-valley-mod"]
+	"UpdateKeys": []
 }
