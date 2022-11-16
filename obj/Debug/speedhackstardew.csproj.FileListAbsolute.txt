@@ -1,0 +1,6 @@
+C:\Users\Jaspe\source\repos\speedhackstardew\speedhackstardew\bin\Debug\speedhackstardew.dll
+C:\Users\Jaspe\source\repos\speedhackstardew\speedhackstardew\bin\Debug\speedhackstardew.pdb
+C:\Users\Jaspe\source\repos\speedhackstardew\speedhackstardew\obj\Debug\speedhackstardew.csproj.AssemblyReference.cache
+C:\Users\Jaspe\source\repos\speedhackstardew\speedhackstardew\obj\Debug\speedhackstardew.csproj.CoreCompileInputs.cache
+C:\Users\Jaspe\source\repos\speedhackstardew\speedhackstardew\obj\Debug\speedhackstardew.dll
+C:\Users\Jaspe\source\repos\speedhackstardew\speedhackstardew\obj\Debug\speedhackstardew.pdb
