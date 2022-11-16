@@ -12,7 +12,7 @@ namespace speedhackstardew
 {
 	public class ModEntry : Mod
 	{
-        int item_id = 0;
+        int item_id = 1;
         int addspeed = 0;
         readonly bool item_safe = false;
         bool collision = true;
