@@ -3,8 +3,8 @@
 	"Author": "Memer#0001",
 	"Version": "0.3.0-beta",
 	"Description": "Nearly out of beta!",
-	"UniqueID": "Memer.speedhackstardew",
-	"EntryDll": "speedhackstardew.dll",
+	"UniqueID": "Memer.CheatSheet",
+	"EntryDll": "Cheat Sheet.dll",
 	"MinimumApiVersion": "3.0.0",
 	"UpdateKeys": ["GitHub:Memer3050/shitty-stardew-valley-mod"]
 }

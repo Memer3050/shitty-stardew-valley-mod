@@ -11,14 +11,13 @@ using StardewValley.Menus;
 using StardewValley.Objects;
 using StardewValley.Tools;
 
-namespace speedhackstardew
+namespace CheatSheet
 {
 	public class ModEntry : Mod
 	{
         int item_id = 0;
         int addspeed = 0;
         int globaltimer = 0;
-        const int player = 100;
 
         bool collision = true;
         bool togglehp = false;
