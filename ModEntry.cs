@@ -121,6 +121,10 @@ namespace CheatSheet
             if (key == "F6") { timelock = !timelock ; Game1.addHUDMessage(new HUDMessage("Time locking enabled", HUDMessage.error_type) { noIcon = true, number = globaltimer }); }
             if (key == "F8"){ timefuck = !timefuck; Game1.addHUDMessage(new HUDMessage("Time Fuck toggled", HUDMessage.error_type) { noIcon = true, number = globaltimer }); }
             if (key == "F9") { Game1.timeOfDay = 2600; Game1.addHUDMessage(new HUDMessage("Changed Time", HUDMessage.error_type) { noIcon = true, number = globaltimer }); }
+            if (key == "PageUp") { item_id += 100; }
+            if (key == "PageDown") { item_id += -100; }
+            if (key == "Home") { item_id += 10; }
+            if (key == "End") { item_id += -10; }
             if (key == "Delete") {
                 string message = "Toggled Mods:^Collision: " + collision + ", ISpawning: " + itemsword + ", Godmode: " + togglehp + "^, Money: " + money_fuck + ", Timel: " + timelock + ", TimeF: " + timefuck + ", Time: " + Game1.timeOfDay + "^, Itemid: " + item_id + ", ASpeed: " + addspeed;
                 Game1.activeClickableMenu = new DialogueBox(message);
