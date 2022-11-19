@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using StardewModdingAPI;
@@ -12,29 +14,40 @@ namespace speedhackstardew
 {
 	public class ModEntry : Mod
 	{
+        // inits
         int item_id = 0;
         int addspeed = 0;
-        readonly bool item_safe = false;
-        bool collision = true;
-        bool togglehp = false;
         int globaltimer = 0;
 
-        int itemsword = 1;
+        bool collision = true;
+        bool togglehp = false;
+        bool timefuck = false;
+        bool itemsword = false;
 
+        // startup class
         public override void Entry(IModHelper helper)
 		{
 			helper.Events.Input.ButtonPressed += this.OnButtonPressed;
             helper.Events.GameLoop.UpdateTicked += this.OnUpdateTicked;
+
+            this.Monitor.Log("Why did you download this mod");
         }
 
-
+        // global timer (ticks)
         private void OnUpdateTicked(object sender, EventArgs e) {
+
             globaltimer++;
+
+            // godmode.
+
             if (togglehp == true) {
                 Game1.player.stamina = Game1.player.maxStamina;
                 Game1.player.health = Game1.player.maxHealth;
             }
             Game1.player.speed = Game1.player.speed + addspeed;
+
+            // noclip code.
+
             if (!collision)
             {
                 Game1.player.ignoreCollisions = true;
@@ -43,73 +56,80 @@ namespace speedhackstardew
                 Game1.player.ignoreCollisions = false;
 
             }
-            
+
+            // time spasm
+
+            if (timefuck == true)
+            {
+                Game1.timeOfDay++;
+            }
+
+
         }
 
-		private void OnButtonPressed(object sender, ButtonPressedEventArgs e)
+        // input class 
+        private void OnButtonPressed(object sender, ButtonPressedEventArgs e)
 		{
+            // world check
+
 			if (!Context.IsWorldReady)
 				return;
 
+            // key = game input
+
             string key = e.Button.ToString();
+
+            // add one to item_id
+
 			if (key == "K") {
                 item_id++;
                 this.Monitor.Log($"{item_id} = item_id.", LogLevel.Debug);
                 Game1.addHUDMessage(new HUDMessage("Item id: " + item_id, HUDMessage.error_type) { noIcon = true, number = globaltimer });
             }
+
+            // subtract one to item_id
+
             if (key == "L") {
                 item_id--;
                 this.Monitor.Log($"{item_id} = item_id.", LogLevel.Debug);
                 Game1.addHUDMessage(new HUDMessage("Item id: " + item_id, HUDMessage.error_type) { noIcon = true, number = globaltimer });
             }
-            if (key == "P") {
-				Item weapon = new MeleeWeapon(item_id);
-                Item item = new StardewValley.Object(item_id, 999, false, -1, 0);
-                if (itemsword == 1) { Game1.player.addItemByMenuIfNecessary(weapon); this.Monitor.Log($"{item_id} as Weapon has been given to player.", LogLevel.Alert); Game1.addHUDMessage(new HUDMessage("Weapon Given.", HUDMessage.error_type) { noIcon = true, number = globaltimer }); return; }
-                else if (itemsword == 2)
-                {
 
-                    Game1.player.addItemToInventory(item);
-                    this.Monitor.Log($"{item_id} as Item has been given to player.", LogLevel.Alert);
+            // crudely gives item_id to you
+
+            if (key == "P") {
+
+
+
+                if (itemsword == false) {
+                    Item weapon = new MeleeWeapon(item_id);
+                    Game1.player.addItemByMenuIfNecessary(weapon);
+                    Game1.addHUDMessage(new HUDMessage("Weapon Given.", HUDMessage.error_type) { noIcon = true, number = globaltimer });
+                }
+                else if (itemsword == true)
+                {
+                    Item item = new StardewValley.Object(item_id, 999);
+                    Game1.player.addItemByMenuIfNecessary(item);
                     Game1.addHUDMessage(new HUDMessage("Item Given.", HUDMessage.error_type) { noIcon = true, number = globaltimer });
                 }
-                else if (itemsword == 3) {
-                    itemsword = 1;
-                    Game1.player.addItemByMenuIfNecessary(weapon); this.Monitor.Log($"{item_id} as Weapon has been given to player.", LogLevel.Alert); Game1.addHUDMessage(new HUDMessage("Weapon Given.", HUDMessage.error_type) { noIcon = true, number = globaltimer });
-                }
             }
+
+            // speed editor
+
             if (key == "MouseX2")
             {
                 addspeed++;
                 Game1.player.speed = Game1.player.speed + addspeed;
-                this.Monitor.Log($"Player speed inc.", LogLevel.Alert);
                 Game1.addHUDMessage(new HUDMessage("Player Speed Increase.", HUDMessage.error_type) { noIcon = true, number = globaltimer });
             }
             if (key == "MouseX1")
             {
                 addspeed--;
                 Game1.player.speed = Game1.player.speed + addspeed;
-                this.Monitor.Log($"Player speed dec.", LogLevel.Alert);
                 Game1.addHUDMessage(new HUDMessage("Player Speed Decrease", HUDMessage.error_type) { noIcon = true, number = globaltimer });
             }
 
-
-            if (key == "NumPad8")
-            {
-                Game1.player.position.Y = Game1.player.position.Y - 50;
-            }
-            if (key == "NumPad2")
-            {
-                Game1.player.position.Y = Game1.player.position.Y + 50;
-            }
-            if (key == "NumPad4")
-            {
-                Game1.player.position.X = Game1.player.position.X - 50;
-            }
-            if (key == "NumPad6")
-            {
-                Game1.player.position.X = Game1.player.position.X + 50;
-            }
+            // F% keys
 
             if (key == "F1")
             {
@@ -126,23 +146,39 @@ namespace speedhackstardew
             }
             if (key == "F2")
             {
-                itemsword++;
-                Game1.addHUDMessage(new HUDMessage("Toggled Item / Sword Spawning.", HUDMessage.error_type) { noIcon = true, number = globaltimer });
+                itemsword = !itemsword;
+                if (itemsword == true)
+                {
+                    Game1.addHUDMessage(new HUDMessage("Toggled Item Spawning.", HUDMessage.error_type) { noIcon = true, number = globaltimer });
+                }
+                if (itemsword == false)
+                {
+                    Game1.addHUDMessage(new HUDMessage("Toggled Sword Spawning.", HUDMessage.error_type) { noIcon = true, number = globaltimer });
+                }
+
             }
             if (key == "F3")
             {
                 togglehp = !togglehp;
+                Game1.addHUDMessage(new HUDMessage("Toggled Godmode", HUDMessage.error_type) { noIcon = true, number = globaltimer });
+            }
+            if (key == "F4")
+            {
+                Game1.player.MiningLevel = 100;
+                Game1.player.ForagingLevel = 100;
+                Game1.player.FarmingLevel = 100;
+                Game1.player.CombatLevel = 100;
+                Game1.player.FishingLevel = 100;
+                Game1.player.LuckLevel = 100;
             }
             if (key == "F8")
             {
-                Game1.addHUDMessage(new HUDMessage($"Time of day: {Game1.timeOfDay}", HUDMessage.error_type) { noIcon = true, number = globaltimer });
+                timefuck = !timefuck;
             }
             if (key == "F9")
             {
                 Game1.timeOfDay = 2600;
             }
-
         }
-
     }
 }
