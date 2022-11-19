@@ -23,6 +23,7 @@ namespace speedhackstardew
         bool togglehp = false;
         bool timefuck = false;
         bool itemsword = false;
+        bool money_fuck = false;
 
         // startup class
         public override void Entry(IModHelper helper)
@@ -61,10 +62,14 @@ namespace speedhackstardew
 
             if (timefuck == true)
             {
-                Game1.timeOfDay++;
+                Game1.timeOfDay = Game1.timeOfDay + 5;
             }
 
+            // money spam
 
+            if (money_fuck == true) {
+                Game1.player.Money = Game1.player.Money + 10;
+            }
         }
 
         // input class 
@@ -98,9 +103,6 @@ namespace speedhackstardew
             // crudely gives item_id to you
 
             if (key == "P") {
-
-
-
                 if (itemsword == false) {
                     Item weapon = new MeleeWeapon(item_id);
                     Game1.player.addItemByMenuIfNecessary(weapon);
@@ -134,51 +136,19 @@ namespace speedhackstardew
             if (key == "F1")
             {
                 collision = !collision;
-                if (collision == true)
-                {
-                    Game1.addHUDMessage(new HUDMessage("Collision On.", HUDMessage.error_type) { noIcon = true, number = globaltimer });
-                }
-                if (collision == false)
-                {
-                    Game1.addHUDMessage(new HUDMessage("Collision Off.", HUDMessage.error_type) { noIcon = true, number = globaltimer });
-                }
-                
+                if (collision == true) { Game1.addHUDMessage(new HUDMessage("Collision On.", HUDMessage.error_type) { noIcon = true, number = globaltimer }); }
+                if (collision == false) { Game1.addHUDMessage(new HUDMessage("Collision Off.", HUDMessage.error_type) { noIcon = true, number = globaltimer }); }
             }
             if (key == "F2")
             {
                 itemsword = !itemsword;
-                if (itemsword == true)
-                {
-                    Game1.addHUDMessage(new HUDMessage("Toggled Item Spawning.", HUDMessage.error_type) { noIcon = true, number = globaltimer });
-                }
-                if (itemsword == false)
-                {
-                    Game1.addHUDMessage(new HUDMessage("Toggled Sword Spawning.", HUDMessage.error_type) { noIcon = true, number = globaltimer });
-                }
-
+                if (itemsword == true) { Game1.addHUDMessage(new HUDMessage("Toggled Item Spawning.", HUDMessage.error_type) { noIcon = true, number = globaltimer }); }
+                if (itemsword == false) { Game1.addHUDMessage(new HUDMessage("Toggled Sword Spawning.", HUDMessage.error_type) { noIcon = true, number = globaltimer }); }
             }
-            if (key == "F3")
-            {
-                togglehp = !togglehp;
-                Game1.addHUDMessage(new HUDMessage("Toggled Godmode", HUDMessage.error_type) { noIcon = true, number = globaltimer });
-            }
-            if (key == "F4")
-            {
-                Game1.player.MiningLevel = 100;
-                Game1.player.ForagingLevel = 100;
-                Game1.player.FarmingLevel = 100;
-                Game1.player.CombatLevel = 100;
-                Game1.player.FishingLevel = 100;
-                Game1.player.LuckLevel = 100;
-            }
-            if (key == "F8")
-            {
-                timefuck = !timefuck;
-            }
-            if (key == "F9")
-            {
-                Game1.timeOfDay = 2600;
-            }
+            if (key == "F3") { togglehp = !togglehp; Game1.addHUDMessage(new HUDMessage("Toggled Godmode", HUDMessage.error_type) { noIcon = true, number = globaltimer }); }
+            if (key == "F5") { money_fuck = !money_fuck; Game1.addHUDMessage(new HUDMessage("Money Fuckery Enabled", HUDMessage.error_type) { noIcon = true, number = globaltimer }); }
+            if (key == "F8"){ timefuck = !timefuck; Game1.addHUDMessage(new HUDMessage("Time Fuck toggled", HUDMessage.error_type) { noIcon = true, number = globaltimer }); }
+            if (key == "F9") { Game1.timeOfDay = 2600; Game1.addHUDMessage(new HUDMessage("Changed Time", HUDMessage.error_type) { noIcon = true, number = globaltimer }); }
         }
     }
 }
