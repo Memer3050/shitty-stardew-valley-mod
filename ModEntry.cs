@@ -53,7 +53,7 @@ namespace speedhackstardew
             if (timefuck == true) { Game1.timeOfDay += 5; }
             if (money_fuck == true) { Game1.player.Money = Game1.player.Money + 50; }
             if (timelock == true) {
-                if (Game1.timeOfDay < 2400) {
+                if (Game1.timeOfDay > 2400) {
                     Game1.timeOfDay = 0000;
                 }
             }
