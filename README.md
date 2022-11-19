@@ -6,7 +6,8 @@ Keybinds:
 - F1: Toggle Collision  
 - F2: Toggle between item / sword spawning  
 - F3:	Toggle Godmode (inf hp and stamina)  
-- F4: Money Fuckery
+- F5: Money Fuckery
+- F6: Time lock 
 - F8: Time Fuckery
 - F9: Force Client Time to 2:00 (Pass out time)
 - MouseX1: Decrease Player speed  
