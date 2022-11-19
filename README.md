@@ -14,6 +14,10 @@ Keybinds:
 - MouseX2: Increase Player speed
 - K: Increase a variable called item_id
 - L: Decrease a variable called item_id
+- PageUp: Increase a variable called item_id by 100
+- PageDown: Decrease a variable called item_id by 100
+- Home: Increase a variable called item_id by 10
+- End: Decrease a variable called item_id by 10
 - P: Give item_id as item or sword to player
 
 > MouseX1 & 2 == Mouse4 or 5 cant remember lol  
