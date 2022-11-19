@@ -14,7 +14,6 @@ namespace speedhackstardew
 {
 	public class ModEntry : Mod
 	{
-        // inits
         int item_id = 0;
         int addspeed = 0;
         int globaltimer = 0;
@@ -24,8 +23,8 @@ namespace speedhackstardew
         bool timefuck = false;
         bool itemsword = false;
         bool money_fuck = false;
+        bool timelock = true;
 
-        // startup class
         public override void Entry(IModHelper helper)
 		{
 			helper.Events.Input.ButtonPressed += this.OnButtonPressed;
@@ -34,21 +33,15 @@ namespace speedhackstardew
             this.Monitor.Log("Why did you download this mod");
         }
 
-        // global timer (ticks)
         private void OnUpdateTicked(object sender, EventArgs e) {
 
             globaltimer++;
-
-            // godmode.
 
             if (togglehp == true) {
                 Game1.player.stamina = Game1.player.maxStamina;
                 Game1.player.health = Game1.player.maxHealth;
             }
             Game1.player.speed = Game1.player.speed + addspeed;
-
-            // noclip code.
-
             if (!collision)
             {
                 Game1.player.ignoreCollisions = true;
@@ -57,51 +50,34 @@ namespace speedhackstardew
                 Game1.player.ignoreCollisions = false;
 
             }
-
-            // time spasm
-
-            if (timefuck == true)
-            {
-                Game1.timeOfDay = Game1.timeOfDay + 5;
+            if (timefuck == true) { Game1.timeOfDay += 5; }
+            if (money_fuck == true) { Game1.player.Money = Game1.player.Money + 50; }
+            if (timelock == true) {
+                if (Game1.timeOfDay < 2400) {
+                    Game1.timeOfDay = 0000;
+                }
             }
 
-            // money spam
-
-            if (money_fuck == true) {
-                Game1.player.Money = Game1.player.Money + 10;
-            }
         }
 
-        // input class 
         private void OnButtonPressed(object sender, ButtonPressedEventArgs e)
 		{
-            // world check
 
 			if (!Context.IsWorldReady)
 				return;
 
-            // key = game input
 
             string key = e.Button.ToString();
-
-            // add one to item_id
-
 			if (key == "K") {
                 item_id++;
                 this.Monitor.Log($"{item_id} = item_id.", LogLevel.Debug);
                 Game1.addHUDMessage(new HUDMessage("Item id: " + item_id, HUDMessage.error_type) { noIcon = true, number = globaltimer });
             }
-
-            // subtract one to item_id
-
             if (key == "L") {
                 item_id--;
                 this.Monitor.Log($"{item_id} = item_id.", LogLevel.Debug);
                 Game1.addHUDMessage(new HUDMessage("Item id: " + item_id, HUDMessage.error_type) { noIcon = true, number = globaltimer });
             }
-
-            // crudely gives item_id to you
-
             if (key == "P") {
                 if (itemsword == false) {
                     Item weapon = new MeleeWeapon(item_id);
@@ -115,9 +91,6 @@ namespace speedhackstardew
                     Game1.addHUDMessage(new HUDMessage("Item Given.", HUDMessage.error_type) { noIcon = true, number = globaltimer });
                 }
             }
-
-            // speed editor
-
             if (key == "MouseX2")
             {
                 addspeed++;
@@ -130,9 +103,6 @@ namespace speedhackstardew
                 Game1.player.speed = Game1.player.speed + addspeed;
                 Game1.addHUDMessage(new HUDMessage("Player Speed Decrease", HUDMessage.error_type) { noIcon = true, number = globaltimer });
             }
-
-            // F% keys
-
             if (key == "F1")
             {
                 collision = !collision;
@@ -147,6 +117,7 @@ namespace speedhackstardew
             }
             if (key == "F3") { togglehp = !togglehp; Game1.addHUDMessage(new HUDMessage("Toggled Godmode", HUDMessage.error_type) { noIcon = true, number = globaltimer }); }
             if (key == "F5") { money_fuck = !money_fuck; Game1.addHUDMessage(new HUDMessage("Money Fuckery Enabled", HUDMessage.error_type) { noIcon = true, number = globaltimer }); }
+            if (key == "F6") { timelock = !timelock ; Game1.addHUDMessage(new HUDMessage("Time locking enabled", HUDMessage.error_type) { noIcon = true, number = globaltimer }); }
             if (key == "F8"){ timefuck = !timefuck; Game1.addHUDMessage(new HUDMessage("Time Fuck toggled", HUDMessage.error_type) { noIcon = true, number = globaltimer }); }
             if (key == "F9") { Game1.timeOfDay = 2600; Game1.addHUDMessage(new HUDMessage("Changed Time", HUDMessage.error_type) { noIcon = true, number = globaltimer }); }
         }
