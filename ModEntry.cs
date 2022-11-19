@@ -7,6 +7,7 @@ using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewModdingAPI.Utilities;
 using StardewValley;
+using StardewValley.Menus;
 using StardewValley.Objects;
 using StardewValley.Tools;
 
@@ -17,6 +18,7 @@ namespace speedhackstardew
         int item_id = 0;
         int addspeed = 0;
         int globaltimer = 0;
+        const int player = 100;
 
         bool collision = true;
         bool togglehp = false;
@@ -54,7 +56,7 @@ namespace speedhackstardew
             if (money_fuck == true) { Game1.player.Money = Game1.player.Money + 50; }
             if (timelock == true) {
                 if (Game1.timeOfDay > 2400) {
-                    Game1.timeOfDay = 0000;
+                    Game1.timeOfDay = 0000; 
                 }
             }
 
@@ -120,6 +122,11 @@ namespace speedhackstardew
             if (key == "F6") { timelock = !timelock ; Game1.addHUDMessage(new HUDMessage("Time locking enabled", HUDMessage.error_type) { noIcon = true, number = globaltimer }); }
             if (key == "F8"){ timefuck = !timefuck; Game1.addHUDMessage(new HUDMessage("Time Fuck toggled", HUDMessage.error_type) { noIcon = true, number = globaltimer }); }
             if (key == "F9") { Game1.timeOfDay = 2600; Game1.addHUDMessage(new HUDMessage("Changed Time", HUDMessage.error_type) { noIcon = true, number = globaltimer }); }
+            if (key == "Delete") {
+                string message = "Toggled Mods:^Collision: " + collision + ", ISpawning: " + itemsword + ", Godmode: " + togglehp + "^, Money: " + money_fuck + ", Timel: " + timelock + ", TimeF: " + timefuck + ", Time: " + Game1.timeOfDay + "^, Itemid: " + item_id + ", ASpeed: " + addspeed;
+                Game1.activeClickableMenu = new DialogueBox(message);
+            }
+            
         }
     }
 }
